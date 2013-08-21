@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,6 +8,7 @@ namespace ApertureCMS.Models
 {
     public class Photo
     {
+        [Key]
         public int PhotoId { get; set; }
         public string PhotoUrl { get; set; }
         public string ThumbnailUrl { get; set; }

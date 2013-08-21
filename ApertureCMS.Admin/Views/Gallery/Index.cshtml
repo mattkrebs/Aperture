@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ApertureCMS.Models.Gallery>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row">
+@foreach (var item in Model) {
+
+  <div class="col-sm-6 col-md-3">
+    <a href="#" class="thumbnail">
+      <img data-src="@item.Photos.ToList()[0].ThumbnailUrl" alt="...">
+    </a>
+  </div>
+}
+</div>
