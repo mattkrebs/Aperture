@@ -14,6 +14,7 @@ namespace ApertureCMS.Admin
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/jquery.imgareaselect.js",
+                        "~/Scripts/jquery.filedrop.js",
                         "~/Scripts/site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

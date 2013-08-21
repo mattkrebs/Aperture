@@ -39,7 +39,9 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            Gallery gallery = new Gallery();
+
+            return View(gallery);
         }
 
         //
