@@ -17,29 +17,7 @@ namespace ApertureCMS.Models
         public string Tags { get; set; }
         public bool Enabled { get; set; }
         public virtual ICollection<Gallery> Galleries {get;set;}
-
-        [Display(Name = "Local file")]
-        [NotMapped]
-        public HttpPostedFileBase File { get; set; }
-
-        [NotMapped]
-        public bool IsFile { get; set; }
-
-        [Range(0, int.MaxValue)]
-        [NotMapped]
-        public int X { get; set; }
-
-        [Range(0, int.MaxValue)]
-        [NotMapped]
-        public int Y { get; set; }
-
-        [Range(1, int.MaxValue)]
-        [NotMapped]
-        public int Width { get; set; }
-
-        [Range(1, int.MaxValue)]
-        [NotMapped]
-        public int Height { get; set; }
+      
 
     }
 }

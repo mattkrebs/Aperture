@@ -1,0 +1,76 @@
+﻿@model ApertureCMS.Admin.Models.UploadPhotoModel
+@{
+    ViewBag.Title = "Index";
+}
+@using ApertureCMS.Admin;
+<h2>Index</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Upload</h3>
+
+        @using (Html.BeginForm("UploadPhoto", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.X)
+            @Html.HiddenFor(model => model.Y)
+            @Html.HiddenFor(model => model.Width)
+            @Html.HiddenFor(model => model.Height)
+            @Html.HiddenFor(model => model.Flickr)
+            <div id="upload-choices">
+                <div class="editor-row">
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.IsUrl)
+                        @Html.LabelFor(model => model.Url)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Url)
+                        @Html.ValidationMessageFor(model => model.Url)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.IsFlickr)
+                        @Html.LabelFor(model => model.Flickr)
+                    </div>
+                    <div class="editor-field">
+                        @Html.Editor("FlickrQuery")
+                        @Html.ValidationMessageFor(model => model.Flickr)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.IsFile)
+                        @Html.LabelFor(model => model.File)
+                    </div>
+                    <div class="editor-field">
+                        @Html.FileFor(model => model.File)
+                        @Html.ValidationMessageFor(model => model.File)
+                    </div>
+                </div>
+                <div class="editor-row">
+                    @Html.ValidationSummary(true)
+                </div>
+            </div>
+            <div id="upload-cut">
+                <img alt="Field for image cutting" id="preview" src="@Url.Content("~/Content/empty.png")" />
+            </div>
+            <div class="clear">
+                <button type="submit">Upload</button>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <h3>My Photos</h3>
+        @if (Model.Images.Count > 0)
+        {
+            foreach (var src in Model.Images)
+            {
+            <div class="col-sm-6 col-md-3">
+                <a href="#" class="thumbnail">
+                    <img src="\Content\img\@src" alt="...">
+                </a>
+            </div>
+            }
+        }
+
+    </div>
+</div>

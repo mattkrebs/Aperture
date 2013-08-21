@@ -12,18 +12,21 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        if (item.Photos.Count > 0)
-        {
         <div class="col-sm-6 col-md-3">
+            <h5>@item.Title</h5>
+        @if (item.Photos.Count > 0)
+        {
+            
             <a href="#" class="thumbnail">
                 <img data-src="@item.Photos.ToList()[0].ThumbnailUrl" alt="...">
             </a>
-        </div>
-        }else
-        {
-            <div class="col-sm-6 col-md-3">
+        } else {
+            <a href="#" class="thumbnail">
+                <img data-src="holder.js/100%x180" alt="...">
+            </a>
              @Html.ActionLink("Add Photos", "Edit", new { id = item.GalleryId})
-                </div>
         }
+        </div>
+
     }
 </div>
