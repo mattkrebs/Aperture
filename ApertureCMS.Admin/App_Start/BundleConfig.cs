@@ -12,12 +12,14 @@ namespace ApertureCMS.Admin
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.imgareaselect.js",
+                        "~/Scripts/site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
-
+          
             bundles.Add(new ScriptBundle("~/bundles/bootsrap").Include(
                        "~/Scripts/bootstrap.js"));
 
@@ -31,7 +33,7 @@ namespace ApertureCMS.Admin
                         "~/Content/bootstrap/bootstrap.css",
                         "~/Content/bootstrap/stickynav-bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/imgareaselect-default.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

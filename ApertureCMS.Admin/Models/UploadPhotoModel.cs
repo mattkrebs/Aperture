@@ -6,19 +6,10 @@ using System.Web;
 
 namespace ApertureCMS.Admin.Models
 {
-    public class UploadPhotoModel
-    {
-        public class UploadImageModel
+   
+        public class UploadPhotoModel
         {
-            [Display(Name = "Internet URL")]
-            public string Url { get; set; }
-
-            public bool IsUrl { get; set; }
-
-            [Display(Name = "Flickr image")]
-            public string Flickr { get; set; }
-
-            public bool IsFlickr { get; set; }
+           
 
             [Display(Name = "Local file")]
             public HttpPostedFileBase File { get; set; }
@@ -37,5 +28,5 @@ namespace ApertureCMS.Admin.Models
             [Range(1, int.MaxValue)]
             public int Height { get; set; }
         }
-    }
+    
 }

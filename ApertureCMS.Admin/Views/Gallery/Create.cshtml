@@ -6,43 +6,38 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+<div class="row">
+    @using (Html.BeginForm("Create","Gallery", FormMethod.Post, new Dictionary<string,object>(){{"role","form"}}))
+{
+    <div class="col-xs-6">
+
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title)
+        @Html.EditorFor(model => model.Title, new  { @class= "form-control" })
+        @Html.ValidationMessageFor(model => model.Title)        
+    </div>
+     <div class="form-group">
+        @Html.LabelFor(model => model.Tags)
+        @Html.EditorFor(model => model.Tags, new  { @class= "form-control" })
+        @Html.ValidationMessageFor(model => model.Tags)        
+    </div>   
+    <div class="form-group">
+         @Html.LabelFor(model => model.Enabled)
+         @Html.EditorFor(model => model.Enabled)
+         @Html.ValidationMessageFor(model => model.Enabled)
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+   
 
-    <fieldset>
-        <legend>Gallery</legend>
+        </div>
+     <div class="col-xs-6">
+        @Html.Partial("_UploadImage")
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Tags)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Tags)
-            @Html.ValidationMessageFor(model => model.Tags)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Enabled)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Enabled)
-            @Html.ValidationMessageFor(model => model.Enabled)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
-
+     </div>
+        }
+    </div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

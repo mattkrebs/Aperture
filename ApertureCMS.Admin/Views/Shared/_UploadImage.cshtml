@@ -1,0 +1,20 @@
+﻿@model ApertureCMS.Models.Photo
+@using ApertureCMS.Admin
+
+ @Html.HiddenFor(model => model.X)
+    @Html.HiddenFor(model => model.Y)
+    @Html.HiddenFor(model => model.Width)
+    @Html.HiddenFor(model => model.Height)
+ @Html.HiddenFor(model => model.IsFile)
+  <div class="form-group">
+        @Html.LabelFor(model => model.Tags)
+        @Html.EditorFor(model => model.Tags, new  { @class= "form-control" })
+        @Html.ValidationMessageFor(model => model.Tags)        
+    </div>
+  <div class="form-group">
+                @Html.FileFor(model => model.File)
+                @Html.ValidationMessageFor(model => model.File)      
+    </div>    
+    <div id="upload-cut">
+        <img alt="Field for image cutting" id="preview" src="@Url.Content("~/Content/empty.png")" />
+    </div>
