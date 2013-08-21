@@ -3,26 +3,30 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="row">
+    <div class="col-sm-10">
+    <h2>Photo Galleries</h2>
+        </div>
+    <div class="col-sm-2">
+   <button type="button" data-toggle="modal" class="btn btn-primary btn-lg" data-target="#createGalleryModal">Create Gallery</button>
+        </div>
+</div>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@Html.Partial("_CreateGalleryModal", new ApertureCMS.Models.Gallery())
 <div class="row">
     @foreach (var item in Model)
     {
         <div class="col-sm-6 col-md-3">
-            <h5>@item.Title</h5>
+            <h4>@item.Title</h4>
         @if (item.Photos.Count > 0)
         {
             
-            <a href="#" class="thumbnail">
+            <a href="/Gallery/Edit/@item.GalleryId" class="thumbnail">
                 <img data-src="@item.Photos.ToList()[0].ThumbnailUrl" alt="...">
             </a>
         } else {
-            <a href="#" class="thumbnail">
-                <img data-src="holder.js/100%x180" alt="...">
+            <a href="/Gallery/Edit/@item.GalleryId" class="thumbnail">
+                <img data-src="holder.js/253x180/text:Add Photos" alt="Add Photos">
             </a>
              @Html.ActionLink("Add Photos", "Edit", new { id = item.GalleryId})
         }
