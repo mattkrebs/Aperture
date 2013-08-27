@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ApertureCMS.Models;
+using ApertureCMS.Admin.Models;
 
 namespace ApertureCMS.Admin.Controllers
 {
@@ -71,6 +72,10 @@ namespace ApertureCMS.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            var images = ImagesModel.GetAllImages("/Content/img/");
+            ViewBag.Images = images;
+          
+
             return View(gallery);
         }
 

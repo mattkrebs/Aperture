@@ -17,17 +17,12 @@ namespace ApertureCMS.Admin.Controllers
         // GET: /Upload/
         public ActionResult Index()
         {
-            var images = new UploadPhotoModel();
-            //Read out files from the files directory
-            var files = Directory.GetFiles(Server.MapPath("~/Content/img"));
-            //Add them to the model
-            foreach (var file in files)
-                images.Images.Add(Path.GetFileName(file));
+            var images = ImagesModel.GetAllImages("~/Content/img");
             ViewBag.Images = images;
             return View(images);
         }
 
-       
+
         [HttpPost]
         public ActionResult UploadPhotos(IEnumerable<HttpPostedFileBase> files)
         {
@@ -36,11 +31,11 @@ namespace ApertureCMS.Admin.Controllers
                 string filePath = Path.Combine(Server.MapPath("~/Content/img"), file.FileName);
                 System.IO.File.WriteAllBytes(filePath, ReadData(file.InputStream));
             }
- 
+
             return Json("All files have been successfully stored.");
         }
 
-
+        
         private byte[] ReadData(Stream stream)
         {
             byte[] buffer = new byte[16 * 1024];

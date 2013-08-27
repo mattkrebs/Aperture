@@ -6,44 +6,54 @@
 
 <h2>Edit</h2>
 
+<div class="row">
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Gallery</legend>
+     <div class="col-xs-2">
 
-        @Html.HiddenFor(model => model.GalleryId)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title)
+                @Html.EditorFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Tags)
+                @Html.EditorFor(model => model.Tags, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Tags)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Enabled)
+                @Html.EditorFor(model => model.Enabled)
+                @Html.ValidationMessageFor(model => model.Enabled)
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Tags)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Tags)
-            @Html.ValidationMessageFor(model => model.Tags)
-        </div>
+        <div class="col-xs-4" id="selectable">
+            
+            @if (ViewBag.Images != null){
+                foreach (var item in ((ApertureCMS.Admin.Models.ImagesModel)ViewBag.Images).Images)
+            {
+                <div class="col-sm-6 col-md-3">
+                <a href="#" class="thumbnail">
+                    <img src="@item" alt="...">
+                </a>
+                    <input name="Image" type="checkbox" />
+            </div>
+            }
+            }
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Enabled)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Enabled)
-            @Html.ValidationMessageFor(model => model.Enabled)
-        </div>
+         <div class="col-xs-4" id="gallery">
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+         </div>
 }
+    </div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
