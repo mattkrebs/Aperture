@@ -12,6 +12,7 @@ namespace ApertureCMS.Models
         [Key]
         public int EntryId { get; set; }
         public string Title { get; set; }
+        [UIHint("tinymce_full")]
         public string Content { get; set; }
         public virtual Gallery Gallery { get; set; }
         public string Tags { get; set; }

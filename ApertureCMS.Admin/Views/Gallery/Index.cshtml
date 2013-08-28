@@ -16,13 +16,12 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-3">
             <h4>@item.Title</h4>
-        @if (item.Photos.Count > 0)
-        {
+        @if (item.Photos.Count > 0)        {
             
             <a href="/Gallery/Edit/@item.GalleryId" class="thumbnail">
-                <img data-src="@item.Photos.ToList()[0].ThumbnailUrl" alt="...">
+                <img src="@item.Photos.ToList()[0].MediumPhotoUrl" alt="...">
             </a>
         } else {
             <a href="/Gallery/Edit/@item.GalleryId" class="thumbnail">

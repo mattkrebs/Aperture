@@ -15,6 +15,7 @@ namespace ApertureCMS.Admin
                         "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/jquery.imgareaselect.js",
                         "~/Scripts/jquery.filedrop.js",
+                        "~/Scripts/jquery.signalR-1.1.3.js",
                         "~/Scripts/holder.js",
                         "~/Scripts/site.js"));
 

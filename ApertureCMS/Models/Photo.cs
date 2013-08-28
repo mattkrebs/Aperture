@@ -10,9 +10,11 @@ namespace ApertureCMS.Models
 {
     public class Photo
     {
+
         [Key]
         public int PhotoId { get; set; }
         public string PhotoUrl { get; set; }
+        public string MediumPhotoUrl { get; set; }
         public string ThumbnailUrl { get; set; }
         public string Tags { get; set; }
         public bool Enabled { get; set; }

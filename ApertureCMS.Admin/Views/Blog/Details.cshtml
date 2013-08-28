@@ -1,0 +1,19 @@
+﻿@model ApertureCMS.Models.BlogEntry
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <h2> @Html.DisplayFor(model => model.Title)</h2>
+    <h5>@Html.DisplayFor(model => model.CreatedDate)</h5>
+     @Html.Raw(Model.Content)
+</div>
+<div class="row">
+     Tags: @Html.DisplayFor(model => model.Tags)
+</div>
+   
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.EntryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

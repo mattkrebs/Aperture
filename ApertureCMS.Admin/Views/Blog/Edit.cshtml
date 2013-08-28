@@ -1,0 +1,62 @@
+﻿@model ApertureCMS.Models.BlogEntry
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<div class="row">
+    <div class="col-xs-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            
+            @Html.HiddenFor(model => model.EntryId)
+            @Html.HiddenFor(model => model.CreatedDate)
+
+               <div class="form-group">
+                    @Html.LabelFor(model => model.Title)
+              
+                    @Html.EditorFor(model => model.Title)
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+
+               <div class="form-group">
+                    @Html.LabelFor(model => model.Content)
+                
+                    @Html.EditorFor(model => model.Content)
+                    @Html.ValidationMessageFor(model => model.Content)
+                </div>
+
+              <div class="form-group">
+                    @Html.LabelFor(model => model.Tags)
+              
+                    @Html.EditorFor(model => model.Tags)
+                    @Html.ValidationMessageFor(model => model.Tags)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Enabled)
+              
+                    @Html.EditorFor(model => model.Enabled)
+                    @Html.ValidationMessageFor(model => model.Enabled)
+                </div>
+
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+          
+        }
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

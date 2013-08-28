@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ApertureCMS.Models.BlogEntry>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-sm-10">
+        <h2>Blog Posts</h2>
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-lg" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Tags)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Enabled)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tags)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Enabled)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.EntryId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.EntryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.EntryId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

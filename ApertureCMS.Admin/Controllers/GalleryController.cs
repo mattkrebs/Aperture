@@ -72,7 +72,7 @@ namespace ApertureCMS.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            var images = ImagesModel.GetAllImages("/Content/img/");
+            var images = db.Photos.ToList();
             ViewBag.Images = images;
           
 
@@ -86,9 +86,27 @@ namespace ApertureCMS.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Gallery gallery)
         {
+            //get current entry from db (db is context)
+            var item = db.Entry<Gallery>(gallery);
+
+            //change item state to modified
+            item.State = EntityState.Modified;
+
+            //load existing items for ManyToMany collection
+            item.Collection(i => i.Photos).Load();
+
+            //clear Photo items          
+            gallery.Photos.Clear();
+
+            //add Toner items
+            foreach (var id in gallery.PhotoIds)
+            {
+                var photo = db.Photos.Find(id);
+                gallery.Photos.Add(photo);
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(gallery).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

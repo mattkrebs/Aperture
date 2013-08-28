@@ -18,8 +18,7 @@ namespace ApertureCMS.Admin
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<ApertureDataContext>(new CreateDatabaseIfNotExists<ApertureDataContext>());
-            Database.SetInitializer<ApertureDataContext>(new DropCreateDatabaseIfModelChanges<ApertureDataContext>());
+          //  Database.SetInitializer<ApertureDataContext>(new DropCreateDatabaseIfModelChanges<ApertureDataContext>());
      
 
 
@@ -30,6 +29,7 @@ namespace ApertureCMS.Admin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
         }
     }
 }
