@@ -10,6 +10,10 @@ using System.Web.Mvc;
 using ApertureCMS.Admin.Models;
 using ApertureCMS.Models;
 using ImageResizer;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure;
+using System.Configuration;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace ApertureCMS.Admin.Controllers
 {
@@ -32,7 +36,7 @@ namespace ApertureCMS.Admin.Controllers
             var size = SiteSettings.ThumbnailWidth;
             Dictionary<string, string> versions = new Dictionary<string, string>();
             //Define the versions to generate
-            versions.Add("_thumb", "width=" + size + "&height=" + size +"&crop=auto&format=jpg"); //Crop to square thumbnail
+            versions.Add("_thumb", "width=" + size + "&height=" + size + "&crop=auto&format=jpg"); //Crop to square thumbnail
             versions.Add("_medium", "maxwidth=400&maxheight=400&format=jpg"); //Fit inside 400x400 area, jpeg
             versions.Add("_large", "maxwidth=1900&maxheight=1900&format=jpg"); //Fit inside 1900x1200 area
             using (var db = new ApertureDataContext())
@@ -42,21 +46,21 @@ namespace ApertureCMS.Admin.Controllers
 
                     if (file.ContentLength <= 0) continue; //Skip unused file controls.
 
+                    string guid = Guid.NewGuid().ToString();
                     //Get the physical path for the uploads folder and make sure it exists
-                    string uploadFolder = Server.MapPath(SiteSettings.UploadPath);
-                    if (!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
-                    var guid = System.Guid.NewGuid().ToString();
-                   
+                    
+
                     //Generate each version
                     foreach (string suffix in versions.Keys)
                     {
+                        UploadFilesToStorageAccount(file, guid + suffix);
                         //Generate a filename (GUIDs are best).
-                        string fullFileName = Path.Combine(uploadFolder, guid + suffix);
-                        
-                        //Let the image builder add the correct extension based on the output file type
-                        fullFileName = ImageBuilder.Current.Build(file, fullFileName, new ResizeSettings(versions[suffix]), false, true);
+                      //  string fullFileName = Path.Combine(uploadFolder, guid + suffix);
 
-                        
+                        //Let the image builder add the correct extension based on the output file type
+                       // fullFileName = ImageBuilder.Current.Build(file, fullFileName, new ResizeSettings(versions[suffix]), false, true);
+
+
                     }
 
                     var photo = new Photo()
@@ -68,14 +72,30 @@ namespace ApertureCMS.Admin.Controllers
 
                     db.Photos.Add(photo);
                 }
-              
+
                 db.SaveChanges();
             }
 
             return Json("All files have been successfully stored.");
         }
 
+        public void UploadFilesToStorageAccount(HttpPostedFileBase file, string newFileName)
+        {
+            CloudStorageAccount storageAccount =    CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            var storageClient = storageAccount.CreateCloudBlobClient();
+            var storageContainer = storageClient.GetContainerReference(ConfigurationManager.AppSettings.Get("CloudStorageContainerReference"));
 
+            storageContainer.CreateIfNotExists();
+
+            
+                string fileName = Path.GetFileName(file.FileName);
+                if (file != null && file.ContentLength > 0)
+                {
+                    CloudBlockBlob azureBlockBlob = storageContainer.GetBlockBlobReference(newFileName);
+                    azureBlockBlob.UploadFromStream(file.InputStream);
+                }
+            
+        }
         private byte[] ReadData(Stream stream)
         {
             byte[] buffer = new byte[16 * 1024];

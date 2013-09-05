@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace ApertureCMS.Models
 {
@@ -23,12 +24,20 @@ namespace ApertureCMS.Models
          public DbSet<BlogEntry> BlogEntries { get; set; }
          public DbSet<Gallery> Galleries { get; set; }
          public DbSet<Photo> Photos { get; set; }
+         public DbSet<User> Users { get; set; }
+         public DbSet<Role> Roles { get; set; }
+
     }
 
     public class ApertureDbInitializer : DropCreateDatabaseIfModelChanges<ApertureDataContext>
     {
         protected override void Seed(ApertureDataContext context)
         {
+
+            WebSecurity.Register("Demo", "123456", "demo@demo.com", true, "Demo", "Demo");
+            Roles.CreateRole("Admin");
+            Roles.AddUserToRole("Demo", "Admin");
+
             var settings = new List<Settings>
             {
                 new Settings { Key = "UploadPath", Value = "/Content/img/" },
@@ -39,4 +48,5 @@ namespace ApertureCMS.Models
             context.SaveChanges();
         }
     }
+   
 }

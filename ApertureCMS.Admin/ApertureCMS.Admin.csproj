@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Backload">
+      <HintPath>..\packages\Backload.1.9.2.2\lib\net45\Backload.dll</HintPath>
+    </Reference>
+    <Reference Include="Backload.Contracts">
+      <HintPath>..\packages\Backload.1.9.2.2\lib\net45\Backload.Contracts.dll</HintPath>
+    </Reference>
     <Reference Include="ImageResizer">
       <HintPath>..\packages\ImageResizer.3.3.3\lib\ImageResizer.dll</HintPath>
     </Reference>
@@ -58,12 +64,19 @@
     <Reference Include="Microsoft.Owin.Host.SystemWeb">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.1.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.2.0.6.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -134,6 +147,10 @@
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -213,12 +230,94 @@
     </Compile>
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CloudFile.cs" />
+    <Compile Include="Models\CloudFilesModel.cs" />
     <Compile Include="Models\ImagesModel.cs" />
     <Compile Include="Models\UploadPhotoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UploadController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Backload\content-types\128\Excel.png" />
+    <Content Include="Content\Backload\content-types\128\File.png" />
+    <Content Include="Content\Backload\content-types\128\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\128\Image.png" />
+    <Content Include="Content\Backload\content-types\128\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\128\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\128\PDF.png" />
+    <Content Include="Content\Backload\content-types\128\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\128\Text.png" />
+    <Content Include="Content\Backload\content-types\128\Word.png" />
+    <Content Include="Content\Backload\content-types\16\Excel.png" />
+    <Content Include="Content\Backload\content-types\16\File.png" />
+    <Content Include="Content\Backload\content-types\16\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\16\Image.png" />
+    <Content Include="Content\Backload\content-types\16\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\16\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\16\PDF.png" />
+    <Content Include="Content\Backload\content-types\16\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\16\Text.png" />
+    <Content Include="Content\Backload\content-types\16\Word.png" />
+    <Content Include="Content\Backload\content-types\24\Excel.png" />
+    <Content Include="Content\Backload\content-types\24\File.png" />
+    <Content Include="Content\Backload\content-types\24\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\24\Image.png" />
+    <Content Include="Content\Backload\content-types\24\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\24\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\24\PDF.png" />
+    <Content Include="Content\Backload\content-types\24\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\24\Text.png" />
+    <Content Include="Content\Backload\content-types\24\Word.png" />
+    <Content Include="Content\Backload\content-types\32\Excel.png" />
+    <Content Include="Content\Backload\content-types\32\File.png" />
+    <Content Include="Content\Backload\content-types\32\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\32\Image.png" />
+    <Content Include="Content\Backload\content-types\32\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\32\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\32\PDF.png" />
+    <Content Include="Content\Backload\content-types\32\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\32\Text.png" />
+    <Content Include="Content\Backload\content-types\32\Word.png" />
+    <Content Include="Content\Backload\content-types\48\Excel.png" />
+    <Content Include="Content\Backload\content-types\48\File.png" />
+    <Content Include="Content\Backload\content-types\48\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\48\Image.png" />
+    <Content Include="Content\Backload\content-types\48\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\48\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\48\PDF.png" />
+    <Content Include="Content\Backload\content-types\48\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\48\Text.png" />
+    <Content Include="Content\Backload\content-types\48\Word.png" />
+    <Content Include="Content\Backload\content-types\64\Excel.png" />
+    <Content Include="Content\Backload\content-types\64\File.png" />
+    <Content Include="Content\Backload\content-types\64\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\64\Image.png" />
+    <Content Include="Content\Backload\content-types\64\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\64\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\64\PDF.png" />
+    <Content Include="Content\Backload\content-types\64\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\64\Text.png" />
+    <Content Include="Content\Backload\content-types\64\Word.png" />
+    <Content Include="Content\Backload\content-types\72\Excel.png" />
+    <Content Include="Content\Backload\content-types\72\File.png" />
+    <Content Include="Content\Backload\content-types\72\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\72\Image.png" />
+    <Content Include="Content\Backload\content-types\72\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\72\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\72\PDF.png" />
+    <Content Include="Content\Backload\content-types\72\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\72\Text.png" />
+    <Content Include="Content\Backload\content-types\72\Word.png" />
+    <Content Include="Content\Backload\content-types\96\Excel.png" />
+    <Content Include="Content\Backload\content-types\96\File.png" />
+    <Content Include="Content\Backload\content-types\96\FileNotFound.png" />
+    <Content Include="Content\Backload\content-types\96\Image.png" />
+    <Content Include="Content\Backload\content-types\96\Multimedia.png" />
+    <Content Include="Content\Backload\content-types\96\OpenOffice-Writer.png" />
+    <Content Include="Content\Backload\content-types\96\PDF.png" />
+    <Content Include="Content\Backload\content-types\96\PowerPoint.png" />
+    <Content Include="Content\Backload\content-types\96\Text.png" />
+    <Content Include="Content\Backload\content-types\96\Word.png" />
     <Content Include="Content\bootstrap\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
@@ -288,11 +387,94 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Theme\css\application.commented.css" />
+    <Content Include="Theme\css\application.css" />
+    <Content Include="Theme\css\application.min.css" />
+    <Content Include="Theme\css\bootstrap-original\bootstrap.css" />
+    <Content Include="Theme\css\bootstrap-original\responsive.css" />
+    <Content Include="Theme\css\chosen-sprite%402x.png" />
+    <Content Include="Theme\css\chosen-sprite.png" />
+    <Content Include="Theme\css\font-awesome\css\font-awesome-ie7.css" />
+    <Content Include="Theme\css\font-awesome\css\font-awesome-ie7.min.css" />
+    <Content Include="Theme\css\font-awesome\css\font-awesome.css" />
+    <Content Include="Theme\css\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Theme\css\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="Theme\css\fontello\css\fontello.css" />
+    <Content Include="Theme\css\fontello\font\fontello.svg" />
+    <Content Include="Theme\css\fontello\LICENSE.txt" />
+    <Content Include="Theme\css\lib\bootstrap-switch.css" />
+    <Content Include="Theme\css\select2.png" />
+    <Content Include="Theme\css\select2x2.png" />
+    <Content Include="Theme\img\1.jpg" />
+    <Content Include="Theme\img\10.jpg" />
+    <Content Include="Theme\img\11.jpg" />
+    <Content Include="Theme\img\12.jpg" />
+    <Content Include="Theme\img\13.jpg" />
+    <Content Include="Theme\img\14.jpg" />
+    <Content Include="Theme\img\15.jpg" />
+    <Content Include="Theme\img\2.jpg" />
+    <Content Include="Theme\img\3.jpg" />
+    <Content Include="Theme\img\5.jpg" />
+    <Content Include="Theme\img\6.jpg" />
+    <Content Include="Theme\img\7.jpg" />
+    <Content Include="Theme\img\8.jpg" />
+    <Content Include="Theme\img\9.jpg" />
+    <Content Include="Theme\img\alpha.png" />
+    <Content Include="Theme\img\bgnoise_lg.png" />
+    <Content Include="Theme\img\bgnoise_lg_dark.png" />
+    <Content Include="Theme\img\bgnoise_lg_transparent.png" />
+    <Content Include="Theme\img\datatables\back_disabled.png" />
+    <Content Include="Theme\img\datatables\back_enabled.png" />
+    <Content Include="Theme\img\datatables\back_enabled_hover.png" />
+    <Content Include="Theme\img\datatables\forward_disabled.png" />
+    <Content Include="Theme\img\datatables\forward_enabled.png" />
+    <Content Include="Theme\img\datatables\forward_enabled_hover.png" />
+    <Content Include="Theme\img\datatables\sort_asc.png" />
+    <Content Include="Theme\img\datatables\sort_asc_disabled.png" />
+    <Content Include="Theme\img\datatables\sort_both.png" />
+    <Content Include="Theme\img\datatables\sort_desc.png" />
+    <Content Include="Theme\img\datatables\sort_desc_disabled.png" />
+    <Content Include="Theme\img\favicon.png" />
+    <Content Include="Theme\img\glyphicons-halflings-dark.png" />
+    <Content Include="Theme\img\glyphicons-halflings-white.png" />
+    <Content Include="Theme\img\glyphicons-halflings.png" />
+    <Content Include="Theme\img\hue.png" />
+    <Content Include="Theme\img\icheck\square\grey%402x.png" />
+    <Content Include="Theme\img\icheck\square\grey.png" />
+    <Content Include="Theme\img\jpeg\1.jpg" />
+    <Content Include="Theme\img\jpeg\10.jpg" />
+    <Content Include="Theme\img\jpeg\11.jpg" />
+    <Content Include="Theme\img\jpeg\12.jpg" />
+    <Content Include="Theme\img\jpeg\2.jpg" />
+    <Content Include="Theme\img\jpeg\3.jpg" />
+    <Content Include="Theme\img\jpeg\4.jpg" />
+    <Content Include="Theme\img\jpeg\5.jpg" />
+    <Content Include="Theme\img\jpeg\6.jpg" />
+    <Content Include="Theme\img\jpeg\7.jpg" />
+    <Content Include="Theme\img\jpeg\8.jpg" />
+    <Content Include="Theme\img\jpeg\9.jpg" />
+    <Content Include="Theme\img\logo.png" />
+    <Content Include="Theme\img\saturation.png" />
+    <Content Include="Theme\img\saturation2.png" />
+    <Content Include="Theme\img\search-white.png" />
+    <Content Include="Theme\img\search.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Theme\css\font-awesome\font\fontawesome-webfont.eot" />
+    <Content Include="Theme\css\font-awesome\font\fontawesome-webfont.ttf" />
+    <Content Include="Theme\css\font-awesome\font\fontawesome-webfont.woff" />
+    <Content Include="Theme\css\font-awesome\font\FontAwesome.otf" />
+    <Content Include="Theme\css\fontello\font\fontello.eot" />
+    <Content Include="Theme\css\fontello\font\fontello.ttf" />
+    <Content Include="Theme\css\fontello\font\fontello.woff" />
+    <Content Include="Theme\css\font\open-sans-bold.woff" />
+    <Content Include="Theme\css\font\open-sans-italic.woff" />
+    <Content Include="Theme\css\font\open-sans-light.woff" />
+    <Content Include="Theme\css\font\open-sans-semibold.woff" />
+    <Content Include="Theme\css\font\open-sans.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -316,6 +498,145 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Theme\js\app.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-affix.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-alert.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-button.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-carousel.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-collapse.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-dropdown.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-modal.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-popover.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-scrollspy.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-tab.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-tooltip.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-transition.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap-typeahead.js" />
+    <Content Include="Theme\js\bootstrap\bootstrap.js" />
+    <Content Include="Theme\js\calendar.js" />
+    <Content Include="Theme\js\chat.js" />
+    <Content Include="Theme\js\fileupload.js" />
+    <Content Include="Theme\js\forms-elemets.js" />
+    <Content Include="Theme\js\forms.js" />
+    <Content Include="Theme\js\index.js" />
+    <Content Include="Theme\js\maps.js" />
+    <Content Include="Theme\js\print.js" />
+    <Content Include="Theme\js\realtime.js" />
+    <Content Include="Theme\js\settings.js" />
+    <Content Include="Theme\js\stats.js" />
+    <Content Include="Theme\js\tables-dynamic.js" />
+    <Content Include="Theme\js\ui-buttons.js" />
+    <Content Include="Theme\js\ui-dialogs.js" />
+    <Content Include="Theme\js\wizard.js" />
+    <Content Include="Theme\lib\backbone\backbone-LICENSE.txt" />
+    <Content Include="Theme\lib\backbone\backbone-min.js" />
+    <Content Include="Theme\lib\backbone\backbone-pageable.js" />
+    <Content Include="Theme\lib\backbone\backbone.js" />
+    <Content Include="Theme\lib\backbone\backbone.localStorage-min.js" />
+    <Content Include="Theme\lib\backbone\backbone.localStorage.js" />
+    <Content Include="Theme\lib\backbone\underscore-LICENSE.txt" />
+    <Content Include="Theme\lib\backbone\underscore-min.js" />
+    <Content Include="Theme\lib\backbone\underscore.js" />
+    <Content Include="Theme\lib\backgrid\backgrid-paginator.js" />
+    <Content Include="Theme\lib\backgrid\backgrid.js" />
+    <Content Include="Theme\lib\backgrid\LICENSE-MIT.txt" />
+    <Content Include="Theme\lib\bootstrap-colorpicker.js" />
+    <Content Include="Theme\lib\bootstrap-datepicker.js" />
+    <Content Include="Theme\lib\bootstrap-select\bootstrap-select-license.txt" />
+    <Content Include="Theme\lib\bootstrap-select\bootstrap-select.js" />
+    <Content Include="Theme\lib\bootstrap-switch.js" />
+    <Content Include="Theme\lib\bootstrap-wysihtml5\bootstrap-wysihtml5-license.txt" />
+    <Content Include="Theme\lib\bootstrap-wysihtml5\bootstrap-wysihtml5.js" />
+    <Content Include="Theme\lib\d3.layout.min.js" />
+    <Content Include="Theme\lib\fullcalendar\fullcalendar-license.txt" />
+    <Content Include="Theme\lib\fullcalendar\fullcalendar.js" />
+    <Content Include="Theme\lib\gmap3.js" />
+    <Content Include="Theme\lib\icheck.js\jquery.icheck.js" />
+    <Content Include="Theme\lib\jquery-maskedinput\jquery.maskedinput-license.txt" />
+    <Content Include="Theme\lib\jquery-maskedinput\jquery.maskedinput.js" />
+    <Content Include="Theme\lib\jquery-ui-1.10.1.custom.js" />
+    <Content Include="Theme\lib\jquery.autogrow-textarea.js" />
+    <Content Include="Theme\lib\jquery.bootstrap.wizard.js" />
+    <Content Include="Theme\lib\jquery.dataTables.min.js" />
+    <Content Include="Theme\lib\jquery.fileupload-fp.js" />
+    <Content Include="Theme\lib\jquery.fileupload-ui.js" />
+    <Content Include="Theme\lib\jquery.fileupload.js" />
+    <Content Include="Theme\lib\jquery.iframe-transport.js" />
+    <Content Include="Theme\lib\jquery.slimscroll.js" />
+    <Content Include="Theme\lib\jquery.vmap.australia.js" />
+    <Content Include="Theme\lib\jquery.vmap.europe.js" />
+    <Content Include="Theme\lib\jquery.vmap.js" />
+    <Content Include="Theme\lib\jquery.vmap.usa.js" />
+    <Content Include="Theme\lib\jquery.vmap.world.js" />
+    <Content Include="Theme\lib\jquery\jquery-migrate-1.1.0.min.js" />
+    <Content Include="Theme\lib\jquery\jquery.1.9.0.min.js" />
+    <Content Include="Theme\lib\nvd3\lib\cie.js" />
+    <Content Include="Theme\lib\nvd3\lib\crossfilter.js" />
+    <Content Include="Theme\lib\nvd3\lib\crossfilter.min.js" />
+    <Content Include="Theme\lib\nvd3\lib\d3.v2.js" />
+    <Content Include="Theme\lib\nvd3\lib\d3.v2.min.js" />
+    <Content Include="Theme\lib\nvd3\lib\d3.v3.min.js" />
+    <Content Include="Theme\lib\nvd3\lib\fisheye.js" />
+    <Content Include="Theme\lib\nvd3\lib\hive.js" />
+    <Content Include="Theme\lib\nvd3\lib\horizon.js" />
+    <Content Include="Theme\lib\nvd3\lib\LICENSE.txt" />
+    <Content Include="Theme\lib\nvd3\lib\sankey.js" />
+    <Content Include="Theme\lib\nvd3\nv.d3.custom.js" />
+    <Content Include="Theme\lib\nvd3\src\core.js" />
+    <Content Include="Theme\lib\nvd3\src\intro.js" />
+    <Content Include="Theme\lib\nvd3\src\models\axis.js" />
+    <Content Include="Theme\lib\nvd3\src\models\backup\bullet.js" />
+    <Content Include="Theme\lib\nvd3\src\models\backup\bulletChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\boilerplate.js" />
+    <Content Include="Theme\lib\nvd3\src\models\bullet.js" />
+    <Content Include="Theme\lib\nvd3\src\models\bulletChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\cumulativeLineChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\discreteBar.js" />
+    <Content Include="Theme\lib\nvd3\src\models\discreteBarChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\distribution.js" />
+    <Content Include="Theme\lib\nvd3\src\models\historicalBar.js" />
+    <Content Include="Theme\lib\nvd3\src\models\indentedTree.js" />
+    <Content Include="Theme\lib\nvd3\src\models\legend.js" />
+    <Content Include="Theme\lib\nvd3\src\models\line.js" />
+    <Content Include="Theme\lib\nvd3\src\models\lineChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\linePlusBarChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\linePlusBarWithFocusChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\lineWithFisheye.js" />
+    <Content Include="Theme\lib\nvd3\src\models\lineWithFisheyeChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\lineWithFocusChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiBar.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiBarChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiBarHorizontal.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiBarHorizontalChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiBarTimeSeries.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiBarTimeSeriesChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\multiChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\ohlcBar.js" />
+    <Content Include="Theme\lib\nvd3\src\models\parallelCoordinates.js" />
+    <Content Include="Theme\lib\nvd3\src\models\pie.js" />
+    <Content Include="Theme\lib\nvd3\src\models\pieChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\pieChartTotal.js" />
+    <Content Include="Theme\lib\nvd3\src\models\scatter.js" />
+    <Content Include="Theme\lib\nvd3\src\models\scatterChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\scatterPlusLineChart.js" />
+    <Content Include="Theme\lib\nvd3\src\models\sparkline.js" />
+    <Content Include="Theme\lib\nvd3\src\models\sparklinePlus.js" />
+    <Content Include="Theme\lib\nvd3\src\models\stackedArea.js" />
+    <Content Include="Theme\lib\nvd3\src\models\stackedAreaChart.js" />
+    <Content Include="Theme\lib\nvd3\src\nv.d3.css" />
+    <Content Include="Theme\lib\nvd3\src\outro.js" />
+    <Content Include="Theme\lib\nvd3\src\tooltip.js" />
+    <Content Include="Theme\lib\nvd3\src\utils.js" />
+    <Content Include="Theme\lib\nvd3\stream_layers.js" />
+    <Content Include="Theme\lib\parsley\parsley.js" />
+    <Content Include="Theme\lib\rickshaw\rickshaw-extensions.js" />
+    <Content Include="Theme\lib\rickshaw\rickshaw-license.txt" />
+    <Content Include="Theme\lib\rickshaw\rickshaw.js" />
+    <Content Include="Theme\lib\select2.js" />
+    <Content Include="Theme\lib\sparkline\jquery.sparkline.js" />
+    <Content Include="Theme\lib\vendor\jquery.ui.widget.js" />
+    <Content Include="Theme\lib\wysihtml5\wysihtml5-0.3.0_rc2-license.txt" />
+    <Content Include="Theme\lib\wysihtml5\wysihtml5-0.3.0_rc2.js" />
     <Content Include="Scripts\tinymce\langs\en.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advhr\css\advhr.css" />
@@ -628,10 +949,83 @@
     <Content Include="Views\Blog\Delete.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full_compressed.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full.cshtml" />
+    <Content Include="Theme\lib\examples\pageable-territories.json" />
+    <Content Include="Theme\lib\nvd3\LICENSE.md" />
+    <Content Include="Theme\lib\parsley\parsley-license.md" />
+    <Content Include="Theme\sass\application.min.scss" />
+    <Content Include="Theme\sass\application.scss" />
+    <Content Include="Theme\sass\bootstrap-original\bootstrap.scss" />
+    <Content Include="Theme\sass\bootstrap-original\responsive.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_accordion.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_alerts.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_breadcrumbs.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_button-groups.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_buttons.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_carousel.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_close.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_code.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_component-animations.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_dropdowns.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_forms.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_grid.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_hero-unit.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_labels-badges.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_layouts.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_media.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_mixins.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_modals.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_navbar.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_navs.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_pager.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_pagination.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_popovers.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_progress-bars.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_reset.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_responsive-1200px-min.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_responsive-767px-max.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_responsive-768px-979px.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_responsive-navbar.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_responsive-utilities.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_scaffolding.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_sprites.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_tables.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_thumbnails.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_tooltip.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_type.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_utilities.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_variables.scss" />
+    <Content Include="Theme\sass\bootstrap-original\_wells.scss" />
+    <Content Include="Theme\sass\lib\_backgrid.scss" />
+    <Content Include="Theme\sass\lib\_bootstrap-colorpicker.scss" />
+    <Content Include="Theme\sass\lib\_bootstrap-switch.scss" />
+    <Content Include="Theme\sass\lib\_bootstrap-wysihtml5.scss" />
+    <Content Include="Theme\sass\lib\_chosen.scss" />
+    <Content Include="Theme\sass\lib\_datepicker.scss" />
+    <Content Include="Theme\sass\lib\_fullcalendar.scss" />
+    <Content Include="Theme\sass\lib\_icheckbox.scss" />
+    <Content Include="Theme\sass\lib\_jquery.datatables.scss" />
+    <Content Include="Theme\sass\lib\_jquery.fileupload-ui.scss" />
+    <Content Include="Theme\sass\lib\_jqvmap.scss" />
+    <Content Include="Theme\sass\lib\_rickshaw.scss" />
+    <Content Include="Theme\sass\lib\_select2.scss" />
+    <Content Include="Theme\sass\_base.scss" />
+    <Content Include="Theme\sass\_bootstrap-override.scss" />
+    <Content Include="Theme\sass\_font.scss" />
+    <Content Include="Theme\sass\_general.scss" />
+    <Content Include="Theme\sass\_print.scss" />
+    <Content Include="Theme\sass\_responsive.scss" />
+    <Content Include="Theme\sass\_svg.scss" />
+    <Content Include="Theme\sass\_variables.scss" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <None Include="Web.Backload.Default.config" />
+    <None Include="Web.FileUpload.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\" />
+    <Folder Include="Scripts\theme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -658,7 +1052,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9782</DevelopmentServerPort>
+          <DevelopmentServerPort>62474</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:7774/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
