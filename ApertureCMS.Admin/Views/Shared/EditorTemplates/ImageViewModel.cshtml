@@ -1,0 +1,8 @@
+﻿@model ApertureCMS.Admin.Models.ImageViewModel
+<li class="span2">
+    @Html.HiddenFor(model => model.PhotoId)
+    <a href="#myModal" class="thumbnail" data-toggle="modal">
+        <img src="@Model.ThumbUrl" alt="">
+    </a>
+    @Html.EditorFor(model => model.Selected)      
+</li>
