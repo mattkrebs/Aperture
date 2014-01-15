@@ -1,44 +1,44 @@
-﻿@model IEnumerable<ApertureCMS.Models.BlogEntry>
+﻿@model IEnumerable<ApertureCMS.Models.Page>
 
 @{
     ViewBag.Title = "Index";
 }
- <div class="row-fluid">
-    <div class="span12">
-        <h2 class="page-title">Article <small>All Blog Entries</small></h2>
-    </div>
-</div>
-@foreach (var item in Model)
-{
-    <div class="row-fluid">
+<div class="row-fluid">
+     <div class="span12">
+        <h2 class="page-title">Pages <small>All Pages</small></h2>
+    </div>           
+</div>   
+ @foreach (var item in Model)
+    {
+<div class="row-fluid">   
         <div class="span12">
             <section class="widget">
                 <header>
                     <h4>
                         <i class="icon-align-left"></i>
-                        @item.Title @Html.ActionLink("Edit", "Edit", new { id = item.EntryId })
+                        @item.Title @Html.ActionLink("Edit", "Edit", new {id = item.PageId})
                     </h4>
 
                 </header>
                 <div class="body">
-                    @Html.Raw(item.Content.Take(100));
+                    @Html.Raw(item.Content.Take(100));                    
                 </div>
-            </section>
-        </div>
-    </div>
-}
+                </section>
+        </div>   
+</div>
+ }
 <div class="row-fluid">
     <div class="span12">
         <section class="widget">
             <header>
                 <h4>
                     <i class="icon-plus-sign"></i>
-                    @Html.ActionLink("New Article", "Create")
+                     @Html.ActionLink("New Page", "Create")
                 </h4>
 
             </header>
             <div class="body">
-                Create a new Blog Entry
+                Create a new content page
             </div>
         </section>
     </div>

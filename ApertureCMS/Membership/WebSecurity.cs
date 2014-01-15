@@ -36,7 +36,7 @@ using System.Web.Security;
         public static MembershipCreateStatus Register(string Username, string Password, string Email, bool IsApproved, string FirstName, string LastName)
         {
             MembershipCreateStatus CreateStatus;
-            Membership.CreateUser(Username, Password, Email, null, null, IsApproved, Guid.NewGuid(), out CreateStatus);
+            Membership.CreateUser(Username, Password, Email,null,null,IsApproved, out CreateStatus);
 
             if (CreateStatus == MembershipCreateStatus.Success)
             {

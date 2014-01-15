@@ -14,6 +14,8 @@ namespace ApertureCMS.Models
         public int SettingsId { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
+        public string Title { get; set; }
+        public string Type { get; set; }
 
     }
 
@@ -26,25 +28,48 @@ namespace ApertureCMS.Models
         {
             get
             {
-                var value = "";
-                using (var db = new ApertureDataContext())
-                {
-                    value = db.Settings.Single(s => s.Key == "UploadPath").Value;
-                }
-                return value ?? "/Content/img/";
+                return GetValue("UploadPath");
             }
         }
-        public static string ThumbnailWidth
+        public static int MaxImageWidth
         {
             get
             {
-                var value = "";
-                using (var db = new ApertureDataContext())
-                {
-                    value = db.Settings.Single(s => s.Key == "ThumbnailWidth").Value;
-                }
-                return value ?? "100";
+                return int.Parse(GetValue("MaxImageWidth"));
             }
+        }
+        public static int MaxImageHeight
+        {
+            get
+            {
+                return int.Parse(GetValue("MaxImageHeight"));
+            }
+        }
+        public static string AzureAccountName {
+            get
+            {
+                return GetValue("AzureAccountName");
+
+            }
+        }
+
+        public static string AzureStorageKey
+        {
+            get
+            {
+                return GetValue("AzureStorageKey");
+            }
+        }
+
+
+        public static string GetValue(string key)
+        {
+            var value = "";
+            using (var db = new ApertureDataContext())
+            {
+                value = db.Settings.Single(s => s.Key == key).Value;
+            }
+            return value ?? "";
         }
     }
 

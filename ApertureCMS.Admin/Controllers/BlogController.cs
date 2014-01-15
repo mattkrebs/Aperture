@@ -11,14 +11,15 @@ namespace ApertureCMS.Admin.Controllers
 {
     public class BlogController : Controller
     {
-        private ApertureDataContext db = new ApertureDataContext();
+        private UnitOfWork unitOfWork = new UnitOfWork();
+
 
         //
         // GET: /Blog/
 
         public ActionResult Index()
         {
-            return View(db.BlogEntries.ToList());
+            return View(unitOfWork.BlogRepository.Get());
         }
 
         //
@@ -26,7 +27,7 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            BlogEntry blogentry = db.BlogEntries.Find(id);
+            BlogEntry blogentry = unitOfWork.BlogRepository.GetByID(id);
             if (blogentry == null)
             {
                 return HttpNotFound();
@@ -53,8 +54,8 @@ namespace ApertureCMS.Admin.Controllers
             if (ModelState.IsValid)
             {
                 blogentry.CreatedDate = DateTime.Now;
-                db.BlogEntries.Add(blogentry);
-                db.SaveChanges();
+                unitOfWork.BlogRepository.Insert(blogentry);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +67,7 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            BlogEntry blogentry = db.BlogEntries.Find(id);
+            BlogEntry blogentry = unitOfWork.BlogRepository.GetByID(id);
             if (blogentry == null)
             {
                 return HttpNotFound();
@@ -84,8 +85,8 @@ namespace ApertureCMS.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(blogentry).State = EntityState.Modified;
-                db.SaveChanges();
+                unitOfWork.BlogRepository.Update(blogentry);
+                unitOfWork.Save();
                 return RedirectToAction("Index");
             }
             return View(blogentry);
@@ -96,7 +97,7 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            BlogEntry blogentry = db.BlogEntries.Find(id);
+            BlogEntry blogentry = unitOfWork.BlogRepository.GetByID(id);
             if (blogentry == null)
             {
                 return HttpNotFound();
@@ -111,15 +112,15 @@ namespace ApertureCMS.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BlogEntry blogentry = db.BlogEntries.Find(id);
-            db.BlogEntries.Remove(blogentry);
-            db.SaveChanges();
+            
+            unitOfWork.BlogRepository.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
     }

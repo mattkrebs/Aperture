@@ -5,13 +5,13 @@ namespace ApertureCMS.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class AddMediumPhotoColumn : IMigrationMetadata
+    public sealed partial class update2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddMediumPhotoColumn));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(update2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201308280137138_Add MediumPhoto Column"; }
+            get { return "201401152018479_update 2"; }
         }
         
         string IMigrationMetadata.Source

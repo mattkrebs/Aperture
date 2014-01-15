@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq.Expressions;
+using ApertureCMS.Models;
 
 namespace ApertureCMS.Admin
 {
@@ -22,6 +23,18 @@ namespace ApertureCMS.Admin
         {
             string name = GetFullPropertyName(expression);
             return html.File(name);
+        }
+
+        public static Byte[] ToByteArray(this HttpPostedFileBase value)
+        {
+            if (value == null)
+                return null;
+
+            var array = new Byte[value.ContentLength];
+            value.InputStream.Position = 0;
+            value.InputStream.Read(array, 0, value.ContentLength);
+            return array;
+
         }
 
         #region Helpers
@@ -67,6 +80,40 @@ namespace ApertureCMS.Admin
             return (exp.NodeType == ExpressionType.Convert || exp.NodeType == ExpressionType.ConvertChecked);
         }
 
+        /// <summary>
+        /// Get SelectList for Html Dropdownlistfor helpler method.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="defaultText">Text for first entry. if empty no default</param>
+        /// <returns></returns>
+        public static List<SelectListItem> GetDropDownList<T>(string defaultText = "") where T : class, ApertureCMS.Models.ILookup
+        {
+            using (ApertureDataContext db = new ApertureDataContext())
+            {
+                var dbSet = db.Set<T>();
+                var list = new List<SelectListItem>();
+                if (!String.IsNullOrEmpty(defaultText))
+                    list.Add(new SelectListItem() { Text = defaultText, Value = "" });
+
+                list.AddRange(dbSet.ToList().Select((item, index) => new SelectListItem
+                {
+                    Value = item.Id.ToString(),
+                    Text = item.Name
+
+                }).ToList());
+                return list;
+
+            }
+        }
+
+
+
+        public static List<SelectListItem> GetPublishStatusDropDownList()
+        {
+            return new List<SelectListItem>(){
+                new SelectListItem(){ Text = "Draft", Value="1"},
+                new SelectListItem(){ Text = "Published", Value="2"}};
+        }
         #endregion
     }
 }

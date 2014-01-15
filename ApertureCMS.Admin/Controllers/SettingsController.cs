@@ -32,14 +32,45 @@ namespace ApertureCMS.Admin.Controllers
 
             var settings = new List<Settings>
             {
-                new Settings { Key = "UploadPath", Value = "/Content/img/" },
-                new Settings { Key = "ThumbnailWidth", Value = "100" },
-                new Settings { Key = "PhotoWidth", Value = "0" },
+                new Settings { Key = "UploadPath", Value = "/Content/img/", Title= "Upload Path" , Type = "text"},
+                new Settings { Key = "MaxImageWidth", Value = "1200" , Title= "Max Image Width" , Type = "text"},
+                new Settings { Key = "MaxImageHeight", Value = "1200" , Title= "Max Image Height" , Type = "text"},
+                new Settings { Key = "UseAzureStorage", Value = "1", Title= "Use Azure Storage" , Type = "text" },                
+                new Settings { Key = "AzureAccountName", Value = "kimjansen" , Title= "Azure Storage Account Name" , Type = "text"},
+                new Settings { Key = "AzureStorageKey", Value = "hgCJEbpepdnV52CUMeJAWh2U2ViOp5Dkv0WOmbcjz2MO4Xixz7iqMS42QGieltop2NTXnoButt3mgEaX3IYcHw==" , Title= "Azure Storage Key" , Type = "text"},
             };
             settings.ForEach(s => db.Settings.Add(s));
+
+            var categories = new List<Category>
+            {
+                new Category { Name = "Newborn"},
+                new Category { Name = "Toddler"},
+                new Category { Name = "Kids"},
+                new Category { Name = "Family"},
+                new Category { Name = "Graduation"},
+                new Category { Name = "Wedding"},
+
+            };
+            categories.ForEach(s => db.Categories.Add(s));
+
+
             db.SaveChanges();
 
             return settings;
+        }
+
+        [HttpPost]
+        public ActionResult Index(List<Settings> setting)
+        {
+            foreach (var item in setting)
+            {
+                var s = db.Settings.Find(item.SettingsId);
+
+                s.Value = item.Value;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
 
     }

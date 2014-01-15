@@ -3,33 +3,56 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="row">
-    <div class="col-sm-10">
-    <h2>Photo Galleries</h2>
-        </div>
-    <div class="col-sm-2">
-   <button type="button" data-toggle="modal" class="btn btn-primary btn-lg" data-target="#createGalleryModal">Create Gallery</button>
-        </div>
+<div class="row-fluid">
+     <div class="span12">
+        <h2 class="page-title">Edit <small>Photo Gallery</small></h2>
+    </div>
+           
 </div>
-
+   
 @Html.Partial("_CreateGalleryModal", new ApertureCMS.Models.Gallery())
-<div class="row">
-    @foreach (var item in Model)
+ @foreach (var item in Model)
     {
-        <div class="col-sm-3">
-            <h4>@item.Title</h4>
-        @if (item.Photos.Count > 0)        {
-            
-            <a href="/Gallery/Edit/@item.GalleryId" class="thumbnail">
-                <img src="@item.Photos.ToList()[0].MediumPhotoUrl" alt="...">
-            </a>
-        } else {
-            <a href="/Gallery/Edit/@item.GalleryId" class="thumbnail">
-                <img data-src="holder.js/253x180/text:Add Photos" alt="Add Photos">
-            </a>
-          
-        }
-        </div>
+<div class="row-fluid">   
+        <div class="span12">
+            <section class="widget">
+                <header>
+                    <h4>
+                        <i class="icon-align-left"></i>
+                        @item.Title @Html.ActionLink("Edit", "Edit", new {id = item.GalleryId})
+                    </h4>
 
-    }
+                </header>
+                <div class="body">
+                    <ul class="thumbnails">
+                        @foreach (var photo in item.Photos)
+                        {
+                            <li class="span3">
+                                <a href="#myModal" class="thumbnail" data-toggle="modal">
+                                    <img src="@photo.MediumPhotoUrl" alt="">
+                                </a>
+                            </li>
+                        }  
+                        </ul>
+                </div>
+                </section>
+        </div>
+    
+</div>
+ }
+<div class="row-fluid">
+    <div class="span12">
+        <section class="widget">
+            <header>
+                <h4>
+                    <i class="icon-plus-sign"></i>
+                    @Html.ActionLink("New Gallery", "Create")
+                </h4>
+
+            </header>
+            <div class="body">
+                Create a new Gallery
+            </div>
+        </section>
+    </div>
 </div>

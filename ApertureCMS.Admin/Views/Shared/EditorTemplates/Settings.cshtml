@@ -1,3 +1,13 @@
 ﻿@model ApertureCMS.Models.Settings
-    
 
+@Html.HiddenFor(model => Model.SettingsId)
+@Html.HiddenFor(model => Model.Title)
+@Html.HiddenFor(model => Model.Type)
+@Html.HiddenFor(model => Model.Key)
+
+    <div class="control-group controls-row">
+        <label class="control-label" for="normal-field">@Model.Key</label>
+        <div class="controls">
+            @Html.EditorFor(model => Model.Value)
+        </div>
+    </div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,16 @@ namespace ApertureCMS.Models
         public string Tags { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Enabled { get; set; }
+        public int Status { get; set; }
+        public Nullable<DateTime> PublishDate { get; set; }
+        public Category Category { get; set; }
+        public string Description { get; set; }
+
+        [ForeignKey("Category")]
+        public int Category_Id { get; set; }
+        
+   
+
      }
 
 

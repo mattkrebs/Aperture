@@ -12,14 +12,14 @@ namespace ApertureCMS.Admin.Controllers
 {
     public class GalleryController : Controller
     {
-        private ApertureDataContext db = new ApertureDataContext();
+        private UnitOfWork unitOfWork = new UnitOfWork();
 
         //
         // GET: /Gallery/
 
         public ActionResult Index()
         {
-            return View(db.Galleries.ToList());
+            return View(unitOfWork.GalleryRepostitory.Get());
         }
 
         //
@@ -27,7 +27,7 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Gallery gallery = db.Galleries.Find(id);
+            Gallery gallery = unitOfWork.GalleryRepostitory.GetByID(id);
             if (gallery == null)
             {
                 return HttpNotFound();
@@ -42,7 +42,7 @@ namespace ApertureCMS.Admin.Controllers
         {
             Gallery gallery = new Gallery();
 
-            return View(gallery);
+            return View(LoadImages(gallery));
         }
 
         //
@@ -50,13 +50,34 @@ namespace ApertureCMS.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Gallery gallery)
+        public ActionResult Create(GalleryViewModel gallery)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Galleries.Add(gallery);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Gallery gal = new Gallery();
+
+                    gal.Enabled = gallery.Enabled;
+                    gal.Tags = gallery.Tags;
+                    gal.Title = gallery.Title;
+                    gal.Category_Id = gallery.CategoryId;
+                    gal.Photos.Clear();
+
+                    foreach (var item in gallery.Photos.Where(x => x.Selected))
+                    {
+                        gal.Photos.Add(unitOfWork.PhotoRepostitory.GetByID(item.PhotoId));
+                    }
+
+                    unitOfWork.GalleryRepostitory.Insert(gal);
+                    unitOfWork.Save();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.)
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
 
             return View(gallery);
@@ -67,16 +88,31 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Gallery gallery = db.Galleries.Find(id);
+            Gallery gallery = unitOfWork.GalleryRepostitory.Get(filter: d => d.GalleryId == id, includeProperties: "Photos").FirstOrDefault();
             if (gallery == null)
             {
                 return HttpNotFound();
             }
-            var images = db.Photos.ToList();
-            ViewBag.Images = images;
-          
 
-            return View(gallery);
+            return View(LoadImages(gallery));
+        }
+
+        private GalleryViewModel LoadImages(Gallery gallery)
+        {
+            GalleryViewModel galleryVM = new GalleryViewModel()
+            {
+                GalleryId = gallery.GalleryId,
+                Enabled = gallery.Enabled,
+                Tags = gallery.Tags,
+                Title = gallery.Title,
+                CategoryId = gallery.Category_Id
+            };
+
+            var ids = gallery.Photos.Select(x => x.PhotoId);
+            var images = unitOfWork.PhotoRepostitory.Get().Select(x => new ImageViewModel(x, ids.Contains(x.PhotoId))).ToList();
+            galleryVM.Photos = images;
+
+            return galleryVM;
         }
 
         //
@@ -84,41 +120,60 @@ namespace ApertureCMS.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Gallery gallery)
+        public ActionResult Edit(GalleryViewModel gallery)
         {
-            //get current entry from db (db is context)
-            var item = db.Entry<Gallery>(gallery);
-
-            //change item state to modified
-            item.State = EntityState.Modified;
-
-            //load existing items for ManyToMany collection
-            item.Collection(i => i.Photos).Load();
-
-            //clear Photo items          
-            gallery.Photos.Clear();
-
-            //add Toner items
-            foreach (var id in gallery.PhotoIds)
+            Gallery gal = unitOfWork.GalleryRepostitory.GetByID(gallery.GalleryId);
+            try
             {
-                var photo = db.Photos.Find(id);
-                gallery.Photos.Add(photo);
+                if (ModelState.IsValid)
+                {
+                    gal.Enabled = gallery.Enabled;
+                    gal.Tags = gallery.Tags;
+                    gal.Title = gallery.Title;
+                    gal.Photos.Clear();
+
+                    foreach (var item in gallery.Photos.Where(x => x.Selected))
+                    {
+                        gal.Photos.Add(unitOfWork.PhotoRepostitory.GetByID(item.PhotoId));
+                    }
+                    unitOfWork.GalleryRepostitory.Update(gal);
+                    unitOfWork.Save();
+
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
 
-            if (ModelState.IsValid)
-            {
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(gallery);
+
+            return View(LoadImages(gal));
         }
+
+        public ActionResult DeletePhoto(int id, int galleryid)
+        {
+           
+            try
+            {
+                unitOfWork.PhotoRepostitory.Delete(id);
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("", "Unable to delete. Try again, and if the problem persists, see your system administrator.");
+            }
+            return RedirectToAction("Edit", new { id = galleryid });
+        }
+
 
         //
         // GET: /Gallery/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            Gallery gallery = db.Galleries.Find(id);
+            Gallery gallery = unitOfWork.GalleryRepostitory.GetByID(id);
             if (gallery == null)
             {
                 return HttpNotFound();
@@ -133,15 +188,15 @@ namespace ApertureCMS.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Gallery gallery = db.Galleries.Find(id);
-            db.Galleries.Remove(gallery);
-            db.SaveChanges();
+            Gallery course = unitOfWork.GalleryRepostitory.GetByID(id);
+            unitOfWork.GalleryRepostitory.Delete(id);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -1,70 +1,89 @@
-﻿@model ApertureCMS.Models.Gallery
+﻿@model ApertureCMS.Admin.Models.GalleryViewModel
 
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
-<div class="row">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-
-        <div class="col-xs-2">
-
-            @Html.HiddenFor(model => model.GalleryId)
-            @Html.ValidationSummary(true)
-            <div class="form-group">
-                @Html.LabelFor(model => model.Title)
-                @Html.EditorFor(model => model.Title, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Title)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Tags)
-                @Html.EditorFor(model => model.Tags, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Tags)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Enabled)
-                @Html.EditorFor(model => model.Enabled)
-                @Html.ValidationMessageFor(model => model.Enabled)
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-
-
-        </div>
-        <div class="col-xs-4" id="selectable">
-
-            @if (ViewBag.Images != null)
-            {
-                var images = (List<ApertureCMS.Models.Photo>)ViewBag.Images;
-                for (int i = 0; i < images.Count; i++)
-                {                  
-               
-                <div class="col-sm-6 col-md-3">
-                    <a href="#" class="thumbnail">
-                        <img src="@images[i].PhotoUrl" alt="...">
-                    </a>
-                    @if(!Model.Photos.Contains(images[i]))
-                    {
-                        <input name="PhotoIds" value="@images[i].PhotoId" type="checkbox" />
-                    }else
-                    {
-                        <input name="PhotoIds" value="@images[i].PhotoId" type="checkbox" checked="checked" />
-                        
-                    }
-                </div>
-                }
-            }
-
-        </div>
-        <div class="col-xs-4" id="gallery">
-        </div>
-    }
+<div class="row-fluid">
+    <div class="span12">
+        <h2 class="page-title">Edit <small>Photo Gallery</small></h2>
+    </div>
 </div>
+@using (Html.BeginForm("Edit", "Gallery", FormMethod.Post, new Dictionary<string, object>() { { "role", "form" } }))
+{
+                       
+    <div class="row-fluid">
+        <div class="span6">
+            <section class="widget">
+                <header>
+                    <h4>
+                        <i class="icon-align-left"></i>
+                        @Model.Title
+                    </h4>
+                </header>
+                <div class="body">
+                    @Html.HiddenFor(model => model.GalleryId)
 
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="control-group controls-row">
+                        @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(model => model.Title, new { @class = "span8" })
+                        </div>
+                    </div>
+                    <div class="control-group controls-row">
+                        @Html.LabelFor(model => model.Tags, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(model => model.Tags, new { @class = "span8" })
+                        </div>
+                    </div>
+                    <div class="control-group controls-row">
+                        @Html.LabelFor(model => model.Enabled, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(model => model.Enabled, new { @class = "span8" })
+                        </div>
+                    </div>
+
+                    <div class="form-actions ">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="span6">
+            <section class="widget">
+                <header>
+                    <h4>
+                        <i class="icon-align-right"></i>
+                        Available Photos
+                    </h4>
+                </header>
+                <div class="body">
+                    <ul class="thumbnails">
+                        @Html.EditorFor(model => model.Photos)
+                      @*  @foreach (var item in ViewBag.Images)
+                        {
+                            
+                            <li class="span4">
+                                <a href="#myModal" class="thumbnail" data-toggle="modal">
+                                    <img src="@item.PhotoUrl" alt="">
+
+                                </a>                                     
+                               @Html.CheckBox("Photo", new { value = item.PhotoId, item.Selected })
+                            </li>
+                        }*@
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+   
+  
+}
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

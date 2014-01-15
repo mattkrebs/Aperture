@@ -21,10 +21,13 @@ namespace ApertureCMS.Models
         public virtual ICollection<Photo> Photos { get; set; }
         public string Tags { get; set; }
         public bool Enabled { get; set; }
-
+        public string ShareCode { get; set; }
+        public bool Protected { get; set; }
+        public Category Category { get; set; }
         [NotMapped]
         public List<int> PhotoIds { get; set; }
 
-
+        [ForeignKey("Category")]
+        public int Category_Id { get; set; }
     }
 }
