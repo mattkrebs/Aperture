@@ -1,31 +1,25 @@
 ﻿ $(function () {
-    var manualuploader =  $('#fine-uploader').fineUploader({
-         request: {
-             endpoint: '/Upload/SaveFiles'
-         },
-         autoUpload: false,
-         editFilename: {
-             enabled: true
-         },
-         validation: {
-             allowedExtensions: ['jpeg', 'jpg', 'png']
-         },
-         thumbnails: {
-             placeholders: {
-                 waitingPath: "assets/waiting-generic.png",
-                 notAvailablePath: "assets/not_available-generic.png"
-             }
-         },
-        
+
+     //Share Code Generator
+     $("#generate-code").on("click", function () {
+         
+         $("#ShareCode").val(makeid());
      });
-     $('#triggerUpload').click(function () {
-         manualuploader.fineUploader('uploadStoredFiles');
-     });
-     $('#startUpload').click(function () {
-         uploader.uploadStoredFiles();
-     });
+
  });
 
  $(function () {
      $("#selectable").selectable();
  });
+
+
+
+ function makeid() {
+     var text = "";
+     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+     for (var i = 0; i < 6; i++)
+         text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+     return text;
+ }

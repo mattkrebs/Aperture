@@ -4,20 +4,38 @@
     ViewBag.Title = "Edit";
 }
 
-<div class="row-fluid">
-    <div class="span12">
+<style type="text/css">
+    .check-image > input[type=checkbox] {
+        display: none;
+    }
+
+    input[type=checkbox] + input[type=hidden] + img {
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    input[type=checkbox]:checked + input[type=hidden] + img {
+        border: 2px solid #f87a1e;
+    }
+
+    input[type=checkbox]:hover + input[type=hidden] + img {
+        border: 2px solid #f87a1e;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
         <h2 class="page-title">Edit <small>Photo Gallery</small></h2>
     </div>
 </div>
-@using (Html.BeginForm("Edit", "Gallery", FormMethod.Post, new Dictionary<string, object>() { { "role", "form" } }))
+@using (Html.BeginForm("Edit", "Gallery", FormMethod.Post, new Dictionary<string, object>() { { "role", "form" }, {"class","form-horizontal label-left"} }))
 {
-                       
-    <div class="row-fluid">
-        <div class="span6">
+
+    <div class="row">
+        <div class="col-md-6">
             <section class="widget">
                 <header>
                     <h4>
-                        <i class="icon-align-left"></i>
+                        <i class="fa fa-align-left"></i>
                         @Model.Title
                     </h4>
                 </header>
@@ -26,26 +44,65 @@
 
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
-                    <div class="control-group controls-row">
+                    <div class="control-group">
                         @Html.LabelFor(model => model.Title, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(model => model.Title, new { @class = "span8" })
+                        <div class="controls form-group">
+                            <div class="col-xs-12 col-sm-8">
+                                @Html.EditorFor(model => model.Title, new { @class = "form-control" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group controls-row">
-                        @Html.LabelFor(model => model.Tags, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(model => model.Tags, new { @class = "span8" })
-                        </div>
-                    </div>
-                    <div class="control-group controls-row">
-                        @Html.LabelFor(model => model.Enabled, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(model => model.Enabled, new { @class = "span8" })
-                        </div>
-                    </div>
 
-                    <div class="form-actions ">
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.Tags, new { @class = "control-label" })
+                        <div class="controls form-group">
+                            <div class="col-xs-12 col-sm-8">
+                                @Html.EditorFor(model => model.Tags, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.ShareCode, new { @class = "control-label" })
+                        <div class="controls form-group">
+                            <div class="col-xs-12 col-sm-8">
+
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.ShareCode, new { @class = "form-control" })
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" id="generate-code" type="button">Generate</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.Protected, new { @class = "control-label" })
+                        <div class="controls form-group">
+                            <div class="col-xs-12 col-sm-8">
+
+                                @Html.EditorFor(model => model.Protected, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.Enabled, new { @class = "control-label" })
+                        <div class="controls form-group">
+                            <div class="col-xs-12 col-sm-8">
+
+                                @Html.EditorFor(model => model.Enabled, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.CategoryId, new { @class = "control-label" })
+                        <div class="controls form-group">
+                            <div class="col-xs-12 col-sm-8">
+                                @Html.DropDownListFor(model => model.CategoryId, ApertureCMS.Admin.HtmlExtensions.GetDropDownList<ApertureCMS.Models.Category>("--Select--"), new { @class = "span4" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
                         <div>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                             <button type="button" class="btn">Cancel</button>
@@ -54,39 +111,27 @@
                 </div>
             </section>
         </div>
-        <div class="span6">
+        <div class="col-md-6">
             <section class="widget">
                 <header>
                     <h4>
-                        <i class="icon-align-right"></i>
+                        <i class="fa fa-align-right"></i>
                         Available Photos
                     </h4>
                 </header>
                 <div class="body">
-                    <ul class="thumbnails">
-                        @Html.EditorFor(model => model.Photos)
-                      @*  @foreach (var item in ViewBag.Images)
-                        {
-                            
-                            <li class="span4">
-                                <a href="#myModal" class="thumbnail" data-toggle="modal">
-                                    <img src="@item.PhotoUrl" alt="">
-
-                                </a>                                     
-                               @Html.CheckBox("Photo", new { value = item.PhotoId, item.Selected })
-                            </li>
-                        }*@
-                    </ul>
+                    <div class="row">
+                        <div class="thumbnails">
+                            @Html.EditorFor(model => model.Photos)
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
     </div>
-   
-  
+
+
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

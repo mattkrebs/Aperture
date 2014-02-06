@@ -17,6 +17,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace ApertureCMS.Admin.Controllers
 {
+    [Authorize]
     public class UploadController : Controller
     {
 
@@ -103,34 +104,8 @@ namespace ApertureCMS.Admin.Controllers
             }
         }
 
-        public HttpPostedFile ResizeImage(HttpPostedFile file)
-        {
-            if (file.ContentLength <= 0) return file; //Skip unused file controls.
+       
 
-            //The resizing settings can specify any of 30 commands.. See http://imageresizing.net for details.
-            //Destination paths can have variables like <guid> and <ext>, or 
-            //even a santizied version of the original filename, like <filename:A-Za-z0-9>
-            ImageResizer.ImageJob i = new ImageResizer.ImageJob(file, "~/uploads/<guid>.<ext>", new ImageResizer.ResizeSettings(
-                        "width=2000;height=2000;format=jpg;mode=max"));
-            i.CreateParentDirectory = true; //Auto-create the uploads directory.
-            i.Build();
-            return file;
-        }
-        private byte[] ReadData(Stream stream)
-        {
-            byte[] buffer = new byte[16 * 1024];
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-
-                return ms.ToArray();
-            }
-        }
 
     }
 }

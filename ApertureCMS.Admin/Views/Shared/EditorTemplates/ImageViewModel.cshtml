@@ -1,8 +1,15 @@
 ﻿@model ApertureCMS.Admin.Models.ImageViewModel
-<li class="span2">
+@*<li class="span2">
     @Html.HiddenFor(model => model.PhotoId)
     <a href="#myModal" class="thumbnail" data-toggle="modal">
         <img src="@Model.ThumbUrl" alt="">
     </a>
     @Html.EditorFor(model => model.Selected)      
-</li>
+</li>*@
+<div class="col-md-2">
+    @Html.HiddenFor(model => model.PhotoId)
+    <label class="check-image" for="check_@Model.PhotoId">
+        @Html.CheckBoxFor(model => model.Selected, new { id = "check_" + Model.PhotoId })
+        <img src="@Model.ThumbUrl" alt="">
+    </label>
+</div>

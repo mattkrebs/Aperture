@@ -5,9 +5,9 @@
 @Html.HiddenFor(model => Model.Type)
 @Html.HiddenFor(model => Model.Key)
 
-    <div class="control-group controls-row">
+    <div class="control-group">
         <label class="control-label" for="normal-field">@Model.Key</label>
-        <div class="controls">
+        <div class="controls form-group">
             @Html.EditorFor(model => Model.Value)
         </div>
     </div>

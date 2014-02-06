@@ -4,6 +4,7 @@
     <title>Light Blue - Admin Template</title>
     <link href="/Theme/css/application.min.css" rel="stylesheet">
     <link href="~/Content/fineuploader-4.1.0-13.min.css" rel="stylesheet" />
+    
     <link rel="shortcut icon" href="img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -17,52 +18,66 @@
 <nav id="sidebar" class="sidebar nav-collapse collapse">
     <ul id="side-nav" class="side-nav">
         <li class="active">
-            <a href="index.html"><i class="icon-home"></i> <span class="name">Dashboard</span></a>
+            <a href="index.html"><i class="fa fa-home"></i> <span class="name">Dashboard</span></a>
         </li>
-        <li class="accordion-group">
+        <li class="panel">
             <a class="accordion-toggle collapsed" data-toggle="collapse"
-               data-parent="#side-nav" href="#page-collapse"><i class="icon-edit"></i><span class="name">Page</span></a>
-            <ul id="page-collapse" class="accordion-body collapse">
+               data-parent="#side-nav" href="#page-collapse"><i class="fa fa-edit"></i><span class="name">Page</span></a>
+            <ul id="page-collapse" class="panel-collapse collapse">
                 <li><a href="/Page">Manage</a></li>
                 <li><a href="/Page/Create">New Page</a></li>
             </ul>
         </li>
-        <li class="accordion-group">
+        <li class="panel">
             <a class="accordion-toggle collapsed" data-toggle="collapse"
-               data-parent="#side-nav" href="#forms-collapse"><i class="icon-picture"></i> <span class="name">Gallery</span></a>
-            <ul id="forms-collapse" class="accordion-body collapse">
+               data-parent="#side-nav" href="#forms-collapse"><i class="fa fa-picture-o"></i><span class="name">Gallery</span></a>
+            <ul id="forms-collapse" class="panel-collapse collapse">
                 <li><a href="/Gallery">Manage</a></li>
-                <li><a href="/Gallery/Create">New Gallery</a></li>      
-                <li><a href="/Upload/">Upload</a></li>                        
+                <li><a href="/Gallery/Create">New Gallery</a></li>
+
             </ul>
         </li>
-        <li class="accordion-group">
-            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="icon-pencil"></i> <span class="name">Blog</span></a>
-            <ul id="stats-collapse" class="accordion-body collapse">
+        <li class="panel">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#side-nav" href="#stats-collapse"><i class="fa fa-pencil"></i> <span class="name">Blog</span></a>
+            <ul id="stats-collapse" class="panel-collapse collapse">
                 <li><a href="/Blog">Manage</a></li>
-                <li><a href="/Blog/Create">New</a></li>                
+                <li><a href="/Blog/Create">New</a></li>
             </ul>
         </li>
-        <li class="accordion-group">
+        @*<li class="panel">
             <a class="accordion-toggle collapsed" data-toggle="collapse"
-               data-parent="#side-nav" href="#ui-collapse"><i class="icon-user"></i> <span class="name">Account</span></a>
+               data-parent="#side-nav" href="#ui-collapse"><i class="fa fa-user"></i><span class="name">Account</span></a>
             <ul id="ui-collapse" class="accordion-body collapse">
-                <li><a href="/Account/Manage">Manage</a></li>                
+                <li><a href="/Account/Manage">Manage</a></li>
             </ul>
-        </li>
+        </li>*@
+        <li class="panel">
+            <a class="accordion-toggle collapsed" data-toggle="collapse"
+               data-parent="#side-nav" href="#manage-collapse"><i class="fa fa-picture-o"></i><span class="name">Manage Photos</span></a>
+            <ul id="manage-collapse" class="panel-collapse collapse">
+                <li><a href="/Gallery/Photos">Manage All</a></li>
+                <li><a href="/Upload">Upload</a></li>
+
+            </ul>
+        </li>      
         <li>
-            <a href="/Gallery/Photos"><i class="icon-picture"></i> <span class="name">Manage Photos</span></a>
-        </li>
-        <li>
-            <a href="/Settings"><i class="icon-asterisk"></i> <span class="name">Settings</span></a>
+            <a href="/Settings"><i class="fa fa-cogs"></i> <span class="name">Settings</span></a>
         </li>       
         <li class="visible-phone">
-            <a href="login.html"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
+            <a href="login.html"><i class="fa fa-sign-out"></i> <span class="name">Sign Out</span></a>
         </li>
     </ul> 
 </nav>
 <div class="wrap">
-   
+    <header class="page-header">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <ul class="nav pull-right">                    
+                    <li class="hidden-phone"><a href="/Account/Logoff"><i class="fa fa-signout"></i></a></li>
+                </ul>                
+            </div>
+        </div>
+    </header>
     <div class="content container-fluid">
         @RenderBody()
     
@@ -111,10 +126,13 @@
 <!-- basic application js-->
 <script src="/Theme/js/app.js"></script>
 <script src="/Theme/js/settings.js"></script>
+    <script src="/Scripts/site.js"></script>
 
 <!-- page specific -->
 <script src="/Theme/js/index.js"></script>
 <script src="/Theme/js/chat.js"></script>
+
+
 
   @RenderSection("scripts", required: false)
 <script type="text/template" id="message-template">

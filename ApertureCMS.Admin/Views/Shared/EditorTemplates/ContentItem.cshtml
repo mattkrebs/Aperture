@@ -1,0 +1,18 @@
+﻿@model ApertureCMS.Models.ContentItem
+
+<fieldset>
+    <legend class="section">Content Items</legend>
+    <div class="control-group">
+        @Html.LabelFor(model=>model.Name)
+        <div class="controls form-group">            
+                @Html.TextBoxFor(model => model.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls form-group">
+            @Html.TextBoxFor(model => model.Name)
+            @Html.DropDownListFor(model => model.ContentTypeId, ApertureCMS.Admin.HtmlExtensions.GetDropDownList<ApertureCMS.Models.ContentType>("-- Select --"))
+        </div>
+    </div>
+    <div class=""></div>
+</fieldset>

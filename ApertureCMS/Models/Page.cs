@@ -20,5 +20,6 @@ namespace ApertureCMS.Models
         public DateTime CreatedDate { get; set; }
         [Display(Name = "Permalink")]
         public string Slug { get; set; }
+        public List<ContentItem> ContentItems { get; set; }
     }
 }

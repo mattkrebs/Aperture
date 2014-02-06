@@ -7,9 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 using ApertureCMS.Models;
 using ApertureCMS.Admin.Models;
+using Microsoft.WindowsAzure.Storage;
+using System.Configuration;
 
 namespace ApertureCMS.Admin.Controllers
 {
+    [Authorize]
     public class GalleryController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
@@ -63,10 +66,12 @@ namespace ApertureCMS.Admin.Controllers
                     gal.Title = gallery.Title;
                     gal.Category_Id = gallery.CategoryId;
                     gal.Photos.Clear();
-
-                    foreach (var item in gallery.Photos.Where(x => x.Selected))
+                    if (gallery.Photos != null)
                     {
-                        gal.Photos.Add(unitOfWork.PhotoRepostitory.GetByID(item.PhotoId));
+                        foreach (var item in gallery.Photos.Where(x => x.Selected))
+                        {
+                            gal.Photos.Add(unitOfWork.PhotoRepostitory.GetByID(item.PhotoId));
+                        }
                     }
 
                     unitOfWork.GalleryRepostitory.Insert(gal);
@@ -96,7 +101,30 @@ namespace ApertureCMS.Admin.Controllers
 
             return View(LoadImages(gallery));
         }
+        public ActionResult Photos()
+        {
+            return View(unitOfWork.PhotoRepostitory.Get());
+        }
+        public ActionResult ForceDeletePhoto(int id)
+        {
+            var photo = unitOfWork.PhotoRepostitory.GetByID(id);
 
+            foreach (var item in photo.Galleries)
+            {
+                var gallery = unitOfWork.GalleryRepostitory.GetByID(item.GalleryId);
+                unitOfWork.GalleryRepostitory.Update(gallery);
+                unitOfWork.Save();
+            }
+
+            unitOfWork.PhotoRepostitory.Delete(id);
+            unitOfWork.Save();
+            //remove them from the storage account too
+            RemoveFileFromStorageAccount(photo.ThumbnailUrl);
+            RemoveFileFromStorageAccount(photo.MediumPhotoUrl);
+            RemoveFileFromStorageAccount(photo.PhotoUrl);
+
+            return RedirectToAction("Photos");
+        }
         private GalleryViewModel LoadImages(Gallery gallery)
         {
             GalleryViewModel galleryVM = new GalleryViewModel()
@@ -113,6 +141,24 @@ namespace ApertureCMS.Admin.Controllers
             galleryVM.Photos = images;
 
             return galleryVM;
+        }
+
+        public void RemoveFileFromStorageAccount(string fileName)
+        {
+            CloudStorageAccount storageAccount = new CloudStorageAccount(new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(SiteSettings.AzureAccountName, SiteSettings.AzureStorageKey), false);
+            var storageClient = storageAccount.CreateCloudBlobClient();
+            var storageContainer = storageClient.GetContainerReference(ConfigurationManager.AppSettings.Get("CloudStorageContainerReference"));
+
+            storageContainer.CreateIfNotExists();
+            var blobs = storageContainer.GetBlobReferenceFromServer(fileName);
+            try
+            {
+                blobs.BeginDeleteIfExists(null, null);
+            }
+            catch (Exception)
+            {               
+                
+            }
         }
 
         //

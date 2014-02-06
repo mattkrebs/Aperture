@@ -5,66 +5,69 @@
 }
 @Scripts.Render("~/Scripts/tinymce/tiny_mce.js")
 
-    <div class="row-fluid">
+    <div class="row">
         <div class="span12">
             <h2 class="page-title">Article <small>Create a new blog entry</small></h2>
         </div>
     </div>
-@using (Html.BeginForm("Create", "Blog", FormMethod.Post, new Dictionary<string, object>() { { "role", "form" } }))
+@using (Html.BeginForm("Create", "Blog", FormMethod.Post, new Dictionary<string, object>() { { "role", "form" }, { "class", "form-horizontal label-left" } }))
 {
     @Html.AntiForgeryToken()
-    <div class="row-fluid">
-        <div class="span8">
+    <div class="row">
+        <div class="col-md-8">
             <section class="widget">
                 <header>
-                    <h4><i class="icon-file-alt"></i> Article <small>Create new article</small></h4>
+                    <h4><i class="fa fa-file-alt"></i> Article <small>Create new article</small></h4>
                 </header>
-                <div class="body">
-                    <form class="form-horizontal" method="post" novalidate="novalidate" data-validate="parsley">
+                <div class="body">                    
                         <fieldset>
                             <div class="control-group">
                                 <label for="title" class="control-label">Title <span class="required">*</span></label>
-                                <div class="controls">                                  
-                                    @Html.EditorFor(model => model.Title)
-                    @Html.ValidationMessageFor(model => model.Title)
+                                <div class="controls form-group">
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Title)
+                                        @Html.ValidationMessageFor(model => model.Title)
+                                    </div>
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label for="text" class="control-label">Content</label>
-                                <div class="controls">
-                                     @Html.EditorFor(model => model.Content)
-                                    @Html.ValidationMessageFor(model => model.Content)
-                                </div>
+                                <div class="controls form-group">
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Content)
+                                        @Html.ValidationMessageFor(model => model.Content)
+                                    </div>
+                                    </div>
                             </div>
                             <div class="control-group">
                                 <label for="description" class="control-label">Tags</label>
-                                <div class="controls">
-                                      @Html.EditorFor(model => model.Tags)
-                                      @Html.ValidationMessageFor(model => model.Tags)
-                                </div>
+                                <div class="controls form-group">
+                                    <div class="col-md-8">
+
+                                        @Html.EditorFor(model => model.Tags)
+                                        @Html.ValidationMessageFor(model => model.Tags)
+                                    </div>
+                                    </div>
                             </div>
                         </fieldset>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success">Submit</button>
                             <button type="button" class="btn">Cancel</button>
                         </div>
-                    </form>
                 </div>
             </section>
         </div>
-        <div class="span4">
+        <div class="col-md-4">
             <section class="widget">
                 <header>
-                    <h4><i class="icon-cog"></i> Options <small>Publishing, categories</small></h4>
+                    <h4><i class="fa fa-cog"></i> Options <small>Publishing, categories</small></h4>
                 </header>
-                <div class="body">
-                    <form id="article-options" class="form-horizontal form-condensed label-left"
-                          method="post">
+                <div class="body">                  
                         <fieldset>
                             <legend class="section">Publishing</legend>
                             <div class="control-group">
                                 <label for="article-status" class="control-label">Status</label>
-                                <div class="controls">
+                                <div class="controls form-group">
                                         @Html.DropDownListFor(model => model.Status, ApertureCMS.Admin.HtmlExtensions.GetPublishStatusDropDownList(), new { @class = "selectpicker select-block-level" })
                                 </div>
                             </div>
@@ -73,20 +76,19 @@
                             <legend class="section">Category & Tags</legend>
                             <div class="control-group">
                                 <label for="article-category" class="control-label">Category</label>
-                                <div class="controls">
+                                <div class="controls form-group">
                                     @Html.DropDownListFor(model => model.Category_Id, ApertureCMS.Admin.HtmlExtensions.GetDropDownList<ApertureCMS.Models.Category>("-- Select --"), new { @class = "selectpicker select-block-level" })
                                     
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label for="article-tags" class="control-label">Tags</label>
-                                <div class="controls">
+                                <div class="controls form-group">
                                     @Html.TextBoxFor(model => model.Tags, new { @class = "input-block-level" })                                   
                                     <span class="help-block">Seporate tags with comma</span>
                                 </div>
                             </div>
                         </fieldset>
-                    </form>
                 </div>
             </section>
            

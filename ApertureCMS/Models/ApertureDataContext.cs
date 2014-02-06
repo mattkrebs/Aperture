@@ -28,6 +28,9 @@ namespace ApertureCMS.Models
          public DbSet<Role> Roles { get; set; }
          public DbSet<Category> Categories { get; set; }
          public DbSet<Page> Pages { get; set; }
+         public DbSet<ContentItem> ContentItems { get; set; }
+         public DbSet<ContentType> ContentTypes { get; set; }
+
 
     }
 

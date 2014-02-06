@@ -90,14 +90,28 @@
     <Compile Include="Membership\CodeFirstRoleProvider.cs" />
     <Compile Include="Membership\Crypto.cs" />
     <Compile Include="Membership\WebSecurity.cs" />
-    <Compile Include="Migrations\201401152018479_update 2.cs" />
-    <Compile Include="Migrations\201401152018479_update 2.Designer.cs">
-      <DependentUpon>201401152018479_update 2.cs</DependentUpon>
+    <Compile Include="Migrations\201402020504496_InitialCreate.cs" />
+    <Compile Include="Migrations\201402020504496_InitialCreate.Designer.cs">
+      <DependentUpon>201402020504496_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402061905145_Content.cs" />
+    <Compile Include="Migrations\201402061905145_Content.Designer.cs">
+      <DependentUpon>201402061905145_Content.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402061922061_Content name.cs" />
+    <Compile Include="Migrations\201402061922061_Content name.Designer.cs">
+      <DependentUpon>201402061922061_Content name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402061926276_Content name fix.cs" />
+    <Compile Include="Migrations\201402061926276_Content name fix.Designer.cs">
+      <DependentUpon>201402061926276_Content name fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApertureDataContext.cs" />
     <Compile Include="Models\BlogEntry.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\ContentItem.cs" />
+    <Compile Include="Models\ContentType.cs" />
     <Compile Include="Models\Gallery.cs" />
     <Compile Include="Models\ILookup.cs" />
     <Compile Include="Models\Page.cs" />
@@ -133,8 +147,17 @@
     <Content Include="SignalR.Sample\StockTicker.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201401152018479_update 2.resx">
-      <DependentUpon>201401152018479_update 2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201402020504496_InitialCreate.resx">
+      <DependentUpon>201402020504496_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402061905145_Content.resx">
+      <DependentUpon>201402061905145_Content.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402061922061_Content name.resx">
+      <DependentUpon>201402061922061_Content name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402061926276_Content name fix.resx">
+      <DependentUpon>201402061926276_Content name fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,18 +3,19 @@
     ViewBag.Title = "Index";
 }
 @using ApertureCMS.Admin;
-   <div class="content container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <h2 class="page-title">Fileupload <small>Drag & drop fileupload</small></h2>
-            </div>
-        </div>
-      @Html.Partial("Upload/_UploadImage")
+    
+       <div class="row">
+           <div class="span12">
+               <h2 class="page-title">Fileupload <small>Drag & drop fileupload</small></h2>
+           </div>
+       </div>
+    @Html.Partial("Upload/_UploadImage")
 
-       @section scripts{
 
-    <script src="~/Scripts/all.fineuploader-4.1.0-13.min.js"></script>
-   
-        <script src="~/Scripts/site.js"></script>
+    @section scripts{
 
-    }
+        <script src="~/Scripts/all.fineuploader-4.1.0-13.min.js"></script>
+        <script src="~/Scripts/uploader.js"></script>
+
+ }
+    

@@ -8,6 +8,7 @@ using System.Web.Security;
 
 namespace ApertureCMS.Admin.Controllers
 {
+    [Authorize]
     public class SettingsController : Controller
     {
         //

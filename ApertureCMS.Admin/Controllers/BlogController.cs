@@ -9,6 +9,7 @@ using ApertureCMS.Models;
 
 namespace ApertureCMS.Admin.Controllers
 {
+    [Authorize]
     public class BlogController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork();

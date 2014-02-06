@@ -12,6 +12,8 @@ namespace ApertureCMS.Admin.Models
         public bool Enabled { get; set; }
         public string Tags { get; set; }
         public int CategoryId { get; set; }
+        public string ShareCode { get; set; }
+        public bool Protected { get; set; }
         
         public List<ImageViewModel> Photos { get; set; }
     }

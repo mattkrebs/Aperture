@@ -3,19 +3,19 @@
 @{
     ViewBag.Title = "Index";
 }
- <div class="row-fluid">
+ <div class="row">
     <div class="span12">
         <h2 class="page-title">Article <small>All Blog Entries</small></h2>
     </div>
 </div>
 @foreach (var item in Model)
 {
-    <div class="row-fluid">
+    <div class="row">
         <div class="span12">
             <section class="widget">
                 <header>
                     <h4>
-                        <i class="icon-align-left"></i>
+                        <i class="fa fa-align-left"></i>
                         @item.Title @Html.ActionLink("Edit", "Edit", new { id = item.EntryId })
                     </h4>
 
@@ -27,12 +27,12 @@
         </div>
     </div>
 }
-<div class="row-fluid">
+<div class="row">
     <div class="span12">
         <section class="widget">
             <header>
                 <h4>
-                    <i class="icon-plus-sign"></i>
+                    <i class="fa fa-plus-sign"></i>
                     @Html.ActionLink("New Article", "Create")
                 </h4>
 

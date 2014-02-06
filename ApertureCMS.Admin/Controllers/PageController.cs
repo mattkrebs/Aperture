@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ApertureCMS.Admin.Controllers
 {
+    [Authorize]
     public class PageController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
@@ -37,6 +38,14 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Create()
         {
+            //var newPage = new Page()
+            //{
+            //    ContentItems = new List<ContentItem>()
+            //    {
+            //        new ContentItem()
+            //    }
+            //};
+            //return View(newPage);
             return View();
         }
 
@@ -101,12 +110,17 @@ namespace ApertureCMS.Admin.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Page page = unitOfWork.PageRepository.GetByID(id);
-            if (page == null)
+            try
             {
-                return HttpNotFound();
+                // TODO: Add delete logic here
+                unitOfWork.PageRepository.Delete(id);
+                unitOfWork.Save();
+                return RedirectToAction("Index");
             }
-            return View(page);
+            catch
+            {
+                return View();
+            }
         }
 
         //

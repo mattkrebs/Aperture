@@ -392,6 +392,7 @@
     <Content Include="Scripts\all.fineuploader-4.1.0-13.min.js" />
     <Content Include="Scripts\fineuploader-4.1.0-13.min.js" />
     <Content Include="Scripts\jquery.fineuploader-4.1.0-13.min.js" />
+    <Content Include="Scripts\uploader.js" />
     <Content Include="Theme\css\application.commented.css" />
     <Content Include="Theme\css\application.css" />
     <Content Include="Theme\css\application.min.css" />
@@ -480,6 +481,8 @@
     <Content Include="Theme\css\font\open-sans-light.woff" />
     <Content Include="Theme\css\font\open-sans-semibold.woff" />
     <Content Include="Theme\css\font\open-sans.woff" />
+    <None Include="Properties\PublishProfiles\matthewkrebs - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\matthewkrebs - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1029,6 +1032,9 @@
     <Content Include="Views\Shared\Upload\_UploadImage.cshtml" />
     <Content Include="Views\Page\Create.cshtml" />
     <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Views\Page\Edit.cshtml" />
+    <Content Include="Views\Gallery\Photos.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ContentItem.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.FileUpload.xsd">
       <SubType>Designer</SubType>
